@@ -5,10 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Kecepatan pergerakan player
-    private float minX = -10f;    // Batas minimum untuk posisi X
-    private float maxX = 9f;      // Batas maksimum untuk posisi X
-    private float minY = -7.1f;   // Batas minimum untuk posisi Y
-    private float maxY = 7.1f;    // Batas maksimum untuk posisi Y
 
     // Update is called once per frame
     void Update()
@@ -26,11 +22,6 @@ public class PlayerMovement : MonoBehaviour
         // Menggerakkan player berdasarkan input pergerakan yang telah disesuaikan
         transform.Translate(movement * moveSpeed * Time.deltaTime);
 
-        // Membatasi pergerakan player pada sumbu X dan Y
-        float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);
-        float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);
-
-        // Memastikan player tidak keluar dari batas yang ditentukan
-        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+        // Tidak ada pembatasan posisi, jadi kita tidak menggunakan Mathf.Clamp
     }
 }
