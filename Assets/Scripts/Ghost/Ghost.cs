@@ -5,7 +5,9 @@ using UnityEngine;
 public class Ghost : MonoBehaviour
 {
     public Transform player;       // Reference to the player's Transform
-    public float speed = 5f;       // Movement speed
+    public Flashlight flashlight;  // Reference to the Flashlight script
+    public float speed = 5f;       // Base movement speed
+    public float reducedSpeed = 2f; // Reduced speed when flashlight is on
     public float stoppingDistance = 1f;  // Minimum distance to stop following
     public bool allowDiagonal = true;   // Allow diagonal movement
 
@@ -13,38 +15,33 @@ public class Ghost : MonoBehaviour
     {
         if (player != null)
         {
-            // Calculate the direction to the player
             Vector3 direction = (player.position - transform.position).normalized;
 
-            // Distance between the entity and the player
             float distance = Vector3.Distance(transform.position, player.position);
 
-            // If within stoppingDistance, stop moving
+            float currentSpeed = (flashlight != null && flashlight.IsFlashlightOn()) ? reducedSpeed : speed;
+
             if (distance > stoppingDistance)
             {
-                // If diagonal movement is disabled, move only vertically or horizontally
                 if (!allowDiagonal)
                 {
                     direction = RestrictToVerticalOrHorizontal(direction);
                 }
 
-                // Move toward the player
-                transform.position += direction * speed * Time.deltaTime;
+                transform.position += direction * currentSpeed * Time.deltaTime;
             }
         }
     }
 
-    // Restrict the direction vector to vertical or horizontal movement
     Vector3 RestrictToVerticalOrHorizontal(Vector3 direction)
     {
-        // Compare absolute values to decide movement direction
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            direction.y = 0;  // Move only horizontally
+            direction.y = 0;
         }
         else
         {
-            direction.x = 0;  // Move only vertically
+            direction.x = 0;
         }
 
         return direction.normalized;
