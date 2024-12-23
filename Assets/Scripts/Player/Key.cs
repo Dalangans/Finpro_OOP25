@@ -8,6 +8,12 @@ public class Key : MonoBehaviour
     public bool hasKey = false; // Status apakah player sudah memiliki key atau belum
     public Vector2 spawnPosition;  // Posisi spawn Key
 
+    // Referensi ke GameObject Grid, yang berisi Door dan DoorOpen
+    public GameObject Grid;        // GameObject yang berisi Door dan DoorOpen
+
+    private GameObject Door;       // GameObject Door yang akan dinonaktifkan
+    private GameObject DoorOpen;   // GameObject DoorOpen yang akan diaktifkan
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +22,24 @@ public class Key : MonoBehaviour
 
         // Memperbarui UI status Key
         UpdateKeyUI();
+
+        // Mencari Door dan DoorOpen dalam GameObject Grid
+        if (Grid != null)
+        {
+            // Mengambil referensi ke Door dan DoorOpen dari objek Grid
+            Door = Grid.transform.Find("Door")?.gameObject;       // Menggunakan ? untuk null-check
+            DoorOpen = Grid.transform.Find("DoorOpen")?.gameObject; // Menggunakan ? untuk null-check
+
+            // Jika Door atau DoorOpen tidak ditemukan, tampilkan pesan error
+            if (Door == null || DoorOpen == null)
+            {
+                Debug.LogError("Door or DoorOpen not found in the Grid object!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Grid GameObject is not assigned in the inspector!");
+        }
     }
 
     // Fungsi untuk mendeteksi tabrakan dengan player
@@ -35,6 +59,15 @@ public class Key : MonoBehaviour
 
             // Memperbarui status UI key
             UpdateKeyUI();
+
+            // Mengubah status GameObject Door dan DoorOpen jika keduanya ada
+            if (Door != null && DoorOpen != null)
+            {
+                // Menonaktifkan Door (jika sebelumnya aktif) dan mengaktifkan DoorOpen
+                Door.SetActive(false);
+                DoorOpen.SetActive(true);
+                Debug.Log("Door has been deactivated and DoorOpen has been activated.");
+            }
         }
     }
 

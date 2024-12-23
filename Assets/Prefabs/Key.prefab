@@ -146,9 +146,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.01}
-  m_Size: {x: 0.12, y: 0.0001}
-  m_Direction: 0
+  m_Offset: {x: -0.004273653, y: 0}
+  m_Size: {x: 1.3675479, y: 1.3675479}
+  m_Direction: 1
 --- !u!114 &7178774994792727786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,4 +163,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyStatusText: {fileID: 0}
   hasKey: 0
-  spawnPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: -2}
+  Grid: {fileID: 0}
