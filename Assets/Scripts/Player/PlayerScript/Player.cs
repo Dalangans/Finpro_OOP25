@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     // Mendeklarasikan instance statis untuk Singleton
     public static Player Instance;
+    public float batteryLife = 100f;
+    public bool hasKey = false; 
 
     // Start is called before the first frame update
     void Start()

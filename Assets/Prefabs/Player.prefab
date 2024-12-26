@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db512c588f707f43bf04500aa4c3050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  batteryLife: 100
 --- !u!114 &7137740585811695692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +471,6 @@ MonoBehaviour:
   player: {fileID: 7079397186850567446}
   flashlightLight: {fileID: 5859736230067941977}
   batteryText: {fileID: 0}
-  batteryLife: 50
+  batteryLife: 100
   batteryDrainRate: 2
   toggleKey: 102

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Battery : MonoBehaviour
@@ -11,9 +13,19 @@ public class Battery : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Menambahkan daya baterai
-            AddBattery(batteryIncreaseAmount);
-            Destroy(gameObject);  // Menghancurkan objek baterai setelah diambil
+            // Akses baterai utama dari player
+            if (Player.Instance != null)
+            {
+                Player.Instance.batteryLife += batteryIncreaseAmount;
+
+                // Batasi baterai maksimal 100
+                if (Player.Instance.batteryLife > 100)
+                    Player.Instance.batteryLife = 100;
+
+                Debug.Log("Battery increased to: " + Player.Instance.batteryLife);
+            }
+
+            Destroy(gameObject); // Hancurkan baterai
         }
     }
 

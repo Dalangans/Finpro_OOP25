@@ -12,14 +12,19 @@ public class BatteryPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Menambahkan daya baterai
-            AddBattery(batteryIncreaseAmount);
+            // Akses baterai utama dari player
+            if (Player.Instance != null)
+            {
+                Player.Instance.batteryLife += batteryIncreaseAmount;
 
-            // Menampilkan pesan debug untuk menunjukkan perubahan daya baterai
-            Debug.Log("Daya baterai bertambah! Daya baterai sekarang: " + playerBattery);
+                // Batasi baterai maksimal 100
+                if (Player.Instance.batteryLife > 100)
+                    Player.Instance.batteryLife = 100;
 
-            // Menghancurkan objek baterai setelah diambil
-            Destroy(gameObject);
+                Debug.Log("Battery increased to: " + Player.Instance.batteryLife);
+            }
+
+            Destroy(gameObject); // Hancurkan baterai
         }
     }
 

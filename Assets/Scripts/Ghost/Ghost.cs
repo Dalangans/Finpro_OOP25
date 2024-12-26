@@ -4,46 +4,44 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviour
 {
-    public Transform player;       // Reference to the player's Transform
-    public Flashlight flashlight;  // Reference to the Flashlight script
-    public float speed = 5f;       // Base movement speed
-    public float reducedSpeed = 2f; // Reduced speed when flashlight is on
-    public float stoppingDistance = 1f;  // Minimum distance to stop following
-    public bool allowDiagonal = true;   // Allow diagonal movement
+    public Transform player;            // Target pemain
+    public float speed = 2f;            // Kecepatan Ghost
+    public float stoppingDistance = 1f; // Jarak berhenti
 
-    void Update()
+    private Rigidbody2D rb;             // Rigidbody2D Ghost
+
+    void Start()
     {
-        if (player != null)
+        rb = GetComponent<Rigidbody2D>();
+
+        if (rb == null)
         {
-            Vector3 direction = (player.position - transform.position).normalized;
+            Debug.LogError("Rigidbody2D not found on Ghost!");
+        }
 
-            float distance = Vector3.Distance(transform.position, player.position);
-
-            float currentSpeed = (flashlight != null && flashlight.IsFlashlightOn()) ? reducedSpeed : speed;
-
-            if (distance > stoppingDistance)
-            {
-                if (!allowDiagonal)
-                {
-                    direction = RestrictToVerticalOrHorizontal(direction);
-                }
-
-                transform.position += direction * currentSpeed * Time.deltaTime;
-            }
+        if (player == null)
+        {
+            Debug.LogError("Player Transform is not assigned!");
         }
     }
 
-    Vector3 RestrictToVerticalOrHorizontal(Vector3 direction)
+    void FixedUpdate()
     {
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        if (player != null)
         {
-            direction.y = 0;
-        }
-        else
-        {
-            direction.x = 0;
-        }
+            // Hitung arah menuju pemain
+            Vector2 direction = (player.position - transform.position).normalized;
 
-        return direction.normalized;
+            // Hitung jarak ke pemain
+            float distance = Vector2.Distance(transform.position, player.position);
+
+            // Jika Ghost belum mencapai jarak berhenti, bergerak ke arah pemain
+            if (distance > stoppingDistance)
+            {
+                // Gerakkan Ghost dengan Rigidbody2D
+                Vector2 newPosition = (Vector2)transform.position + direction * speed * Time.fixedDeltaTime;
+                rb.MovePosition(newPosition);
+            }
+        }
     }
 }

@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3f6f0f2eb3201458cda788f8479b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggleKey: 116
   keyStatusText: {fileID: 0}
-  hasKey: 0
-  spawnPosition: {x: 0, y: -2}
-  Grid: {fileID: 0}
+  Door: {fileID: 0}
+  DoorOpen: {fileID: 0}
