@@ -7,6 +7,6 @@ public class MainScene : MonoBehaviour
 {
     public void GameLoop()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync("GameLoop");
     }
 }
