@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;  // Add this for scene management
 
 public class Jumpscare : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Jumpscare : MonoBehaviour
         if (jumpscareImage != null) jumpscareImage.SetActive(false);
 
         // Pastikan AudioSource terhubung dan ada sound yang valid
+        audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
             Debug.LogError("AudioSource tidak ditemukan di objek ini!");
@@ -30,6 +32,10 @@ public class Jumpscare : MonoBehaviour
             }
 
             // Pastikan suara dapat diputar
+            if (audioSource != null)
+            {
+                audioSource.Play(); // Play the jumpscare sound
+            }
             else
             {
                 Debug.LogError("Jumpscare sound not assigned or AudioSource not available!");
@@ -51,5 +57,8 @@ public class Jumpscare : MonoBehaviour
         }
 
         Debug.Log("Jumpscare ended.");
+
+        // Load the "Dead" scene
+        SceneManager.LoadScene("Died");  // This will load the "Dead" scene
     }
 }
