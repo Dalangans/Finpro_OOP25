@@ -4,28 +4,35 @@ using UnityEngine;
 public class Jumpscare : MonoBehaviour
 {
     public GameObject jumpscareImage; // Objek gambar jumpscare (UI Image atau SpriteRenderer)
-    public AudioClip jumpscareSound;  // Efek suara jumpscare
     private AudioSource audioSource;
 
     void Start()
     {
         // Pastikan gambar dan suara sudah diatur
         if (jumpscareImage != null) jumpscareImage.SetActive(false);
-        audioSource = GetComponent<AudioSource>();
+
+        // Pastikan AudioSource terhubung dan ada sound yang valid
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource tidak ditemukan di objek ini!");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Cek apakah objek yang bertabrakan adalah Player
         if (other.CompareTag("Player"))
         {
+            // Menampilkan gambar jumpscare jika objek gambar ada
             if (jumpscareImage != null)
             {
                 jumpscareImage.SetActive(true); // Tampilkan gambar jumpscare
             }
 
-            if (jumpscareSound != null && audioSource != null)
+            // Pastikan suara dapat diputar
+            else
             {
-                audioSource.PlayOneShot(jumpscareSound); // Mainkan suara jumpscare
+                Debug.LogError("Jumpscare sound not assigned or AudioSource not available!");
             }
 
             Debug.Log("Jumpscare triggered!");
